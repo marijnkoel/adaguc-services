@@ -1,7 +1,2 @@
 /target/
-*.xml
-*.xml
-.idea/libraries/Maven__ch_qos_logback_logback_classic_1_2_3.xml
-.idea/libraries/Maven__ch_qos_logback_logback_core_1_2_3.xml
-*.xml
-adaguc-services.iml
+.idea/
