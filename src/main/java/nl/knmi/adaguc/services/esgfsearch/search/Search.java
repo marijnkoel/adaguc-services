@@ -653,22 +653,23 @@ public class Search {
                     HttpSession session = request.getSession();
 
                     String savedQuery = (String) session.getAttribute("savedquery");
-                    String newQuery = "";
-                    savedQuery = savedQuery != null ? savedQuery : newQuery;
-                    savedQuery = query != null ? savedQuery : null;
+                    String newQuery = query;
 
                     // NOTE
                     //  Not sure if this was intended. Might require an error if null.
                     //  Legacy did not contain a null check of any kind, so if query is null, so will newQuery be
-                    if (query != null
-                            && (query.equalsIgnoreCase("clear=onload")
-                            || query.equalsIgnoreCase("clear=clear"))) {
-                        newQuery = savedQuery;
+                    if (query != null) switch (query) {
+                        case "clear=onload":
+                            newQuery = savedQuery != null ? savedQuery : "";
+                            break;
+                        case "clear=clear":
+                            newQuery = "";
+                            break;
                     }
 
                     session.setAttribute("savedquery", newQuery);
 
-                    jsonResponse = this.getFacets(facets, query, pageNr, pageLimit);
+                    jsonResponse = this.getFacets(facets, newQuery, pageNr, pageLimit);
                     break;
                 case "checkurl":
                     jsonResponse = catalogChecker.checkURL(query, request);
