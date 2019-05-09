@@ -6,14 +6,14 @@ import java.util.Date;
 
 public class CacheItem<TItem> {
 
-    private final Tuple<Integer, TItem> store;
+    private final Tuple<Long, TItem> store;
     private final int timeoutTimeSeconds;
 
     /**
      * @param timestamp Timestamp in seconds
      * @param item      Item to be cached
      */
-    private CacheItem(int timestamp, int timeoutTimeSeconds, TItem item) {
+    private CacheItem(long timestamp, int timeoutTimeSeconds, TItem item) {
         this.timeoutTimeSeconds = timeoutTimeSeconds;
 
         if (timestamp < 0) throw new IllegalArgumentException("Timestamp cannot be less than zero");
@@ -27,7 +27,7 @@ public class CacheItem<TItem> {
      * @return MemoryCache-item bound to current time
      */
     static <TItem> CacheItem<TItem> createItem(int timeoutTimeSeconds, TItem item) {
-        return new CacheItem<>((int) new Date().getTime(), timeoutTimeSeconds, item);
+        return new CacheItem<>((new Date()).getTime(), timeoutTimeSeconds, item);
     }
 
     /**
@@ -41,7 +41,7 @@ public class CacheItem<TItem> {
     /**
      * @return Timestamp in seconds
      */
-    public int getTime() {
+    public long getTime() {
         return store.getFirst();
     }
 
