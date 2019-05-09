@@ -30,3 +30,31 @@ For creating a new package:
 
 1.1.0 - Uses spring boot 2.0
 
+# Docker
+
+To build adaguc-services with docker do:
+```
+docker build -t adaguc-services .
+```
+
+To run the docker container with your own configuration file do:
+
+You need to specify the configuration file usin the ADAGUC_SERVICES_CONFIG environment variable.
+```
+mkdir ./myconfig
+cp ./Docker/adaguc-services-config.xml ./myconfig
+```
+
+ Extend with the following
+ ```
+  <esgfsearch>
+    <enabled>true</enabled>
+    <cachelocation>/tmp/esgfsearch</cachelocation>
+    <searchurl>https://esg-dn1.nsc.liu.se/esg-search/search?</searchurl>
+  </esgfsearch>
+  ```
+```
+docker run -it -p 8080:8080 -e EXTERNALADDRESS="localhost" -e ADAGUC_SERVICES_CONFIG="/config/adaguc-services-config.xml" -v `pwd`/myconfig:/config adaguc-services
+```
+
+http://localhost:8080/adaguc-services/esgfsearch/search?service=search&request=getfacets&query=clear&facet=project

@@ -132,6 +132,7 @@ if [ ${dbexists} == "no" ]
 then
   echo "Initializing new postgresql database"
   #mkdir -p ${ADAGUCDB} && chmod 777 ${ADAGUCDB} && chown postgres: ${ADAGUCDB} && #TODO NOT NEEDED ANYMORE?
+  chmod 777 /var/log/adaguc
   runuser -l $PGUSERNAME -c "pg_ctl initdb -U adaguc -w -D ${ADAGUCDB}" && \
   runuser -l $PGUSERNAME -c "pg_ctl -w -U adaguc -D ${ADAGUCDB} -l /var/log/adaguc/postgresql.log start" && \
   echo "Configuring new postgresql database" && \
